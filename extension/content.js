@@ -2,22 +2,22 @@ const datasetKey = 'disable_youtube_watch_later_autoplay';
 
 function tryFixWatchLaterVideoUrl(element) {
 	if (element.tagName !== 'A' && element.tagName !== 'IMG') {
-		return false;
+		return null;
 	}
 	while (element.tagName !== 'A') {
 		element = element.parentElement;
 		if (!element) {
-			return false;
+			return null;
 		}
 	}
 	if (datasetKey in element.dataset) {
-		return true;
+		return element.href;
 	}
 	let url;
 	try {
 		url = new URL(element.href);
 	} catch (_) {
-		return false;
+		return null;
 	}
 	if (
 		url.pathname === '/watch' && url.searchParams.get('list') === 'WL'
@@ -26,19 +26,20 @@ function tryFixWatchLaterVideoUrl(element) {
 		url.searchParams.delete('index');
 		element.href = url.href;
 		element.dataset[datasetKey] = true;
-		return true;
+		return url.href;
 	}
-	return false;
+	return null;
 }
 
 // Intercept in-page navigation and perform a full page navigation to the fixed URL instead.
 document.body.addEventListener(
 	'click',
 	e => {
-		if (tryFixWatchLaterVideoUrl(e.target)) {	
+		let href;
+		if (href = tryFixWatchLaterVideoUrl(e.target)) {	
 			e.preventDefault();
 			e.stopPropagation();
-			window.location = e.target.href;
+			window.location = href;
 		}
 	},
 	{
