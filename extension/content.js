@@ -1,5 +1,9 @@
 const datasetKey = 'disable_youtube_watch_later_autoplay';
 
+const isMacOs = navigator.userAgentData ?
+	navigator.userAgentData.platform === 'macOS' :
+	navigator.userAgent.indexOf('Mac OS X') !== -1;
+
 function tryFixWatchLaterVideoUrl(element) {
 	switch (element.tagName) {
 		case 'DIV':
@@ -40,12 +44,15 @@ function tryFixWatchLaterVideoUrl(element) {
 	return null;
 }
 
-// Intercept in-page navigation and perform a full page navigation to the fixed URL instead.
+// Fix URLs on click event to enable opening videos in a new tab (with Control or Command keys) or intercept in-page navigation and perform a full page navigation instead.
 document.body.addEventListener(
 	'click',
 	e => {
 		let href;
-		if (href = tryFixWatchLaterVideoUrl(e.target)) {	
+		if (
+			(href = tryFixWatchLaterVideoUrl(e.target)) &&
+			((isMacOs && !e.metaKey) || (!isMacOs && !e.ctrlKey))
+		) {	
 			e.preventDefault();
 			e.stopPropagation();
 			window.location = href;
