@@ -1,7 +1,7 @@
 {
 	"name": "Disable YouTube Watch Later Autoplay",
 	"description": "Watch individual videos that you saved for later without autoplaying all of them.",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"manifest_version": 2,
 	"icons": {
 		"16": "icon-16.png",
