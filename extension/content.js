@@ -5,23 +5,22 @@ const isMacOs = navigator.userAgentData ?
 	navigator.userAgent.indexOf('Mac OS X') !== -1;
 
 function tryFixWatchLaterVideoUrl(element) {
-	switch (element.tagName) {
-		case 'DIV':
-			if (element.classList.contains('ytd-playlist-video-renderer')) {
-				const videoTitleAnchors = element.querySelectorAll('a#video-title');
-				if (videoTitleAnchors.length === 1) {
-					element = videoTitleAnchors[0];
-				}
+	if (element.tagName !== 'A') {
+		while (element) {
+			if (element.id === 'content' && element.parentElement?.tagName === 'YTD-PLAYLIST-VIDEO-RENDERER') {
+				break;
 			}
-			break;
-		case 'IMG':
-			while (element.tagName !== 'A' && element.parentElement) {
-				element = element.parentElement;
-			}
-			break;
-	}
-	if (!element || element.tagName !== 'A') {
-		return null;
+			element = element.parentElement;
+		}
+		if (!element) {
+			return null;
+		}
+		const videoTitleAnchors = element.querySelectorAll('a#video-title');
+		if (videoTitleAnchors.length === 1) {
+			element = videoTitleAnchors[0];
+		} else {
+			return null;
+		}
 	}
 	if (datasetKey in element.dataset) {
 		return element.href;
