@@ -1,27 +1,34 @@
 $src = 'extension'
-$srcFiles = Join-Path $src '*'
 $bin = 'bin'
-$binMv2 = Join-Path $bin 'mv2'
-$binMv3 = Join-Path $bin 'mv3'
+
+$targets = Get-ChildItem $src 'manifest.*.json' |
+    Select-Object -ExpandProperty 'Name' |
+    ForEach-Object { $_.Split('.')[1]  }
 
 Write-Host 'Starting build...'
-Write-Host "Build directory: $bin"
+Write-Host "Output directory: $bin"
 
 if (Test-Path $bin) {
-    Write-Host 'Cleaning build directory...'
-    Remove-Item $(Join-Path $bin '*') -Recurse
+    Write-Host 'Cleaning output directory...'
+    Remove-Item (Join-Path $bin '*') -Recurse
 } else {
-    Write-Host 'Creating build directory...'
-    New-Item $bin -ItemType Directory
+    Write-Host 'Creating output directory...'
+    New-Item $bin -ItemType 'Directory'
 }
 
-Write-Host 'Copying files to build directory...'
-New-Item $binMv2 -ItemType Directory
-Copy-Item $srcFiles $binMv2 -Exclude 'manifest.*.json' -Recurse
-Copy-Item $(Join-Path $src 'manifest.v2.json') $(Join-Path $binMv2 'manifest.json')
-
-New-Item $binMv3 -ItemType Directory
-Copy-Item $srcFiles $binMv3 -Exclude 'manifest.*.json' -Recurse
-Copy-Item $(Join-Path $src 'manifest.v3.json') $(Join-Path $binMv3 'manifest.json')
+Write-Host 'Copying files to output directory...'
+$srcFiles = Join-Path $src '*'
+foreach ($target in $targets) {
+    Write-Host "Processing target: $target..."
+    $targetDir = Join-Path $bin $target
+    New-Item $targetDir -ItemType 'Directory'
+    Copy-Item $srcFiles $targetDir -Exclude 'manifest.json', 'manifest.*.json' -Recurse
+    $manifest = Get-Content (Join-Path $src 'manifest.json') -Raw | ConvertFrom-Json -AsHashtable -NoEnumerate
+    $targetManifest = Get-Content (Join-Path $src "manifest.$target.json") -Raw | ConvertFrom-Json -AsHashtable -NoEnumerate
+    foreach ($key in $targetManifest.Keys) {
+        $manifest[$key] = $targetManifest[$key]
+    }
+    ConvertTo-Json $manifest -Depth 100 | Set-Content (Join-Path $targetDir 'manifest.json')
+}
 
 Write-Host 'Build complete.'

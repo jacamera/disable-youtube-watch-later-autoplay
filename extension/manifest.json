@@ -9,9 +9,6 @@
 		"48": "icon-48.png",
 		"128": "icon-128.png"
 	},
-	"background": {
-		"service_worker": "background.js"
-	},
 	"host_permissions": [
 		"https://*.youtube.com/*"
 	],
