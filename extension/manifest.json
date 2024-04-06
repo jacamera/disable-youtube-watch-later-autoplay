@@ -9,6 +9,9 @@
 		"48": "icon-48.png",
 		"128": "icon-128.png"
 	},
+	"permissions": [
+		"scripting"
+	],
 	"host_permissions": [
 		"https://*.youtube.com/*"
 	],
