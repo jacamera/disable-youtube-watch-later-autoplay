@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@types/chrome": "0.0.265",
     "prettier": "3.2.5"
   }
 }
