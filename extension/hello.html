@@ -24,6 +24,10 @@
       strong {
         font-size: 18pt;
       }
+      button {
+        padding: 1em;
+        font-weight: bold;
+      }
       em {
         font-style: normal;
         text-decoration: underline;
@@ -50,29 +54,46 @@
       <img src="./icon-128.png" alt="Extension Logo" />
       <strong>Disable YouTube Watch Later Autoplay</strong>
     </p>
-    <p>Thank you for installing the extension!</p>
-    <p>
-      As the name suggests, this extension
-      <em
-        >only prevents your Watch Later videos from opening in an autoplaying
-        playlist</em
-      >.
-    </p>
-    <p>
-      Try it out on your
-      <a href="https://www.youtube.com/playlist?list=WL" target="_blank"
-        >Watch Later</a
-      >
-      list now!
-    </p>
-    <p>
-      If you experience any problems please
-      <a
-        href="https://github.com/jacamera/disable-youtube-watch-later-autoplay/issues"
-        target="_blank"
-        >open an issue on Github</a
-      >
-      before leaving a negative review.
-    </p>
+    <noscript>
+      <p>
+        JavaScript is disabled. Please manually verify that the extension
+        permissions are enabled for youtube.com.
+      </p>
+    </noscript>
+    <div id="permission-prompt" style="display: none">
+      <p>Permission required.</p>
+      <p>
+        This extension will not work until you allow it to access data on
+        youtube.com.
+      </p>
+      <p><button id="permission-button">Allow Access</button></p>
+    </div>
+    <div id="welcome-message" style="display: none">
+      <p>Thank you for installing the extension!</p>
+      <p>
+        As the name suggests, this extension
+        <em
+          >only prevents your Watch Later videos from opening in an autoplaying
+          playlist</em
+        >.
+      </p>
+      <p>
+        Try it out on your
+        <a href="https://www.youtube.com/playlist?list=WL" target="_blank"
+          >Watch Later</a
+        >
+        list now!
+      </p>
+      <p>
+        If you experience any problems please
+        <a
+          href="https://github.com/jacamera/disable-youtube-watch-later-autoplay/issues"
+          target="_blank"
+          >open an issue on Github</a
+        >
+        before leaving a negative review.
+      </p>
+    </div>
+    <script src="hello.js"></script>
   </body>
 </html>
