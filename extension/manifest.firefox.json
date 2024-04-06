@@ -1,12 +1,10 @@
 {
-    "background": {
-        "scripts": [
-            "background.js"
-        ]
-    },
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "{a772bd67-aa81-402e-8dbf-e0e0c7cb71d8}"
-        }
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{a772bd67-aa81-402e-8dbf-e0e0c7cb71d8}"
     }
+  }
 }
