@@ -10,7 +10,7 @@ The YouTube Watch Later feature lets users save a video to watch at a later time
 
 ## How to Use the Extension
 
-Just install the extension from the [Chrome](https://chrome.google.com/webstore/detail/disable-youtube-watch-lat/pipapjplioodfcahamejlgfloniakbpa) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/disable-youtube-wl-autoplay/) stores. Once installed, the extension works automatically. When you click on a video on the Watch Later list the extension will remove the playlist parameters from the video URL, allowing you to watch the video or copy the URL without the default autoplaying playlist behavior.
+Just install the extension from the [Chrome](https://chrome.google.com/webstore/detail/disable-youtube-watch-lat/pipapjplioodfcahamejlgfloniakbpa) or [Firefox](https://addons.mozilla.org/firefox/addon/disable-youtube-wl-autoplay/) stores. Once installed, the extension works automatically. When you click on a video on the Watch Later list the extension will remove the playlist parameters from the video URL, allowing you to watch the video or copy the URL without the default autoplaying playlist behavior.
 
 ## How it Works
 
